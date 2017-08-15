@@ -64,7 +64,7 @@ request.setAttribute("serverManageActive", "active");
              <tr>
                <td>${s.id }</td>
                <td><label>${s.name }</label><br/>
-               <td>${s.innerIp }${s.outIp }</td>
+               <td>${s.innerIp }<br/>${s.outIp }</td>
                <td>${s.description }</td>
                <td>${s.config }</td>
                <td><fmt:formatDate value="${s.onlineTime }" pattern="yyyy-MM-dd"/></td>

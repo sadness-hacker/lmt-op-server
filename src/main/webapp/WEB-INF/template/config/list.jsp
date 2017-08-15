@@ -35,9 +35,16 @@ request.setAttribute("configManageActive", "active");
     <section class="content">
       <div class="box box-danger">
       	<div class="box-header with-border">
+      	<form action="" id="ducx-query-form">
+         	<input type="hidden" name="currPage" value="1" id="ducx-query-curr-page">
+         	<input type="hidden" name="pageSize" value="10">
+<!--             <label>关键字：</label> -->
+<%--             <input type="text" name="keyword" placeholder="请输入关键字..." value="${pageModel.paramsMap.keyword }" style="padding: 4px 12px;margin-right: 10px;"/> --%>
+<!--             <button type="submit" class="btn btn-default btn-flat" style="margin-right: 10px;"><i class="fa fa-search"></i> 查寻</button> -->
          	<a href="${ctx }/op/config/edit" class="btn btn-info btn-flat">
          		<i class="fa fa-plus-circle"></i> 添加
          	</a>
+         </form>
          </div>
          <!-- /.box-header -->
          <div class="box-body">
