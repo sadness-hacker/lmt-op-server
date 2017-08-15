@@ -1,7 +1,9 @@
 package com.lmt.op.filter;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.Filter;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.lmt.common.util.IPUtil;
+import com.lmt.op.cache.TrustIPCache;
 import com.lmt.op.model.User;
 
 
@@ -59,6 +63,17 @@ public class AuthFilter implements Filter {
 			if(user == null){
 				response.sendRedirect(path + "/login");
 				return;
+			}
+		}
+		if(isAuthIpUri(uri)){
+			User user = (User) request.getSession().getAttribute("curr_user");
+			if(user == null){
+				String ip = IPUtil.getRemoteIp(request);
+				if(!TrustIPCache.isTrustIp(ip)){
+					response.setContentType("text/html;charset=UTF-8");
+					response.getWriter().print("{'success':false,'code':403,'msg':'非受信的ip'}");
+					return;
+				}
 			}
 		}
 		chain.doFilter(arg0, arg1);
@@ -140,6 +155,32 @@ public class AuthFilter implements Filter {
 		}
 		AUTH_URL.put(uri, o);
 		return true;
+	}
+	
+	private String [] authIpRegex = {
+			"/op/deployLog/log",
+			"/op/config/load",
+			"/op/deployLog/reportRollbackStatus",
+			"/op/center/report",
+			"/op/center/regist",
+			"/op/version/download",
+			"/op/version/md5",
+			"/op/deployLog/bakVersion"
+	};
+	
+	private Set<String> authIpUrlSet = new HashSet<String>();
+	
+	private boolean isAuthIpUri(String uri){
+		if(authIpUrlSet.contains(uri)){
+			return true;
+		}
+		for(String s : authIpRegex){
+			if(uri.matches(s)){
+				authIpUrlSet.add(uri);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

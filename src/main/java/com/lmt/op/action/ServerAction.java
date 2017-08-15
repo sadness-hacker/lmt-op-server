@@ -1,7 +1,6 @@
 package com.lmt.op.action;
 
 import java.io.IOException;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,6 +63,7 @@ public class ServerAction extends BaseAction {
 		}else{
 			serverService.update(server);
 		}
+		serverService.flushIpCache();
 		response.sendRedirect("list");
 	}
 	

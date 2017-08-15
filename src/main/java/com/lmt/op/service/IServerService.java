@@ -12,4 +12,6 @@ import com.lmt.orm.common.serivce.IBaseService;
  */
 public interface IServerService extends IBaseService<ServerDao, Server, Integer> {
 
+	public void flushIpCache();
+	
 }
