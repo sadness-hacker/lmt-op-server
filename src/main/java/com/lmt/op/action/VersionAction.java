@@ -158,7 +158,7 @@ public class VersionAction extends BaseAction {
 		dl.setVersionNum(version.getVersionNum());
 		dl.setVersionType(envType);
 		dl.setStatus(2);//批量发布
-		if("batchDeploy".equals(type)){
+		if("signleDeploy".equals(type)){
 			dl.setStatus(3);//需要单个发布
 		}
 		
