@@ -8,6 +8,7 @@ use Digest::MD5::File;
 use POSIX qw/strftime/;
 use JSON;
 use Cwd;
+use Encode;
 
 #获取当前目录
 my $pwd = getcwd();
@@ -306,7 +307,7 @@ sub deploy{
 			$conf_file = $conf_file . $p . "<br/>";
 			my $con = $c->{'content'};
 			open(F,">$tomcat_base_path/webapps/ROOT/$p");
-			print (F $con);
+			print (F encode('utf8',$con));
 			close(F);
 		}
 		$time = strftime("%Y-%m-%d %H:%M:%S",localtime);
