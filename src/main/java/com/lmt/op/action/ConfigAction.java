@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,13 +50,28 @@ public class ConfigAction extends BaseAction {
 	public String list(
 			@RequestParam(value="currPage",defaultValue="1") int currPage,
 			@RequestParam(value="limit",defaultValue="10") int limit,
+			@RequestParam(value="appId",defaultValue="0") int appId,
+			@RequestParam(value="envType",defaultValue="") String envType,
+			@RequestParam(value="name",defaultValue="") String name,
 			HttpServletRequest request,HttpServletResponse response){
 		PaginationModel<Config> pageModel = new PaginationModel<Config>();
 		pageModel.setCurrPage(currPage);
 		pageModel.setLimit(limit);
+		Config conf = new Config();
+		if(appId > 0){
+			conf.setAppId(appId);
+		}
+		if(StringUtils.isNotBlank(envType)){
+			conf.setEnvType(envType);
+		}
+		if(StringUtils.isNotBlank(name)){
+			conf.setName(name);
+		}
+		pageModel.setT(conf);
 		configService.list(pageModel);
 		request.setAttribute("pageModel", pageModel);
 		request.setAttribute("envTypeMap", TypeUtil.getEnvTypeMap());
+		request.setAttribute("appList", applicationService.listAll());
 		return "config/list";
 	}
 	
