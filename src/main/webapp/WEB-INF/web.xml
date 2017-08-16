@@ -5,7 +5,7 @@
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
 	id="lmt-blog" 
 	version="3.0">
-  <display-name>lmt-blog</display-name>
+  <display-name>lmt-op-server</display-name>
   	<filter>
           <filter-name>encodingFilter</filter-name>
           <filter-class>
