@@ -38,9 +38,23 @@ request.setAttribute("configManageActive", "active");
       	<form action="" id="ducx-query-form">
          	<input type="hidden" name="currPage" value="1" id="ducx-query-curr-page">
          	<input type="hidden" name="pageSize" value="10">
-<!--             <label>关键字：</label> -->
-<%--             <input type="text" name="keyword" placeholder="请输入关键字..." value="${pageModel.paramsMap.keyword }" style="padding: 4px 12px;margin-right: 10px;"/> --%>
-<!--             <button type="submit" class="btn btn-default btn-flat" style="margin-right: 10px;"><i class="fa fa-search"></i> 查寻</button> -->
+            <label>配置名：</label>
+            <input type="text" name="name" placeholder="请输入配置名..." value="${param.name }" style="padding: 4px 12px;margin-right: 10px;"/>
+            <label>环境：</label>
+            <select name="envType">
+            	<option></option>
+            	<c:forEach var="e" items="${envTypeMap }">
+            	<option value="${e.key }"<c:if test="${param.envType eq e.key }"> selected="selected"</c:if>>${e.value }</option>
+            	</c:forEach>
+            </select>
+            <label>应用：</label>
+            <select name="appId">
+            	<option></option>
+            	<c:forEach var="a" items="${appList }">
+            	<option value="${a.id }"<c:if test="${param.appId eq a.id }"> selected="selected"</c:if>>${a.name }</option>
+            	</c:forEach>
+            </select>
+            <button type="submit" class="btn btn-default btn-flat" style="margin-right: 10px;"><i class="fa fa-search"></i> 查寻</button>
          	<a href="${ctx }/op/config/edit" class="btn btn-info btn-flat">
          		<i class="fa fa-plus-circle"></i> 添加
          	</a>
