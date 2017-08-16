@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-request.setAttribute("versionManageActive", "active");
+if(request.getParameter("deplogId") != null){
+	request.setAttribute("deployLogManageActive", "active");
+}else{
+	request.setAttribute("versionManageActive", "active");
+}
 %>
 <!DOCTYPE html>
 <html>
