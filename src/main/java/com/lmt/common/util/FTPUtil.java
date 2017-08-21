@@ -29,15 +29,15 @@ public class FTPUtil {
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 	
-	private static String host = "db01";
+	private static String host = ConfigUtil.get("ftp", "ftp.host");
 	
-	private static int port = 21;
+	private static int port = Integer.parseInt(ConfigUtil.get("ftp", "ftp.port"));
 	
-	private static String username = "ftp01";
+	private static String username = ConfigUtil.get("ftp", "ftp.user");
 	
-	private static String password = "123456";
+	private static String password = ConfigUtil.get("ftp", "ftp.password");
 	
-	private static String rootPath = "/";
+	private static String rootPath = ConfigUtil.get("ftp", "ftp.root.path");
 	
 	/**
 	 * 下载zip包
