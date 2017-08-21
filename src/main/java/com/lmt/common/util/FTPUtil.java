@@ -29,13 +29,13 @@ public class FTPUtil {
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 	
-	private static String host = "hlife-web02";
+	private static String host = "db01";
 	
 	private static int port = 21;
 	
-	private static String username = "ftphlife";
+	private static String username = "ftp01";
 	
-	private static String password = "!KHDIFhlife-op@2016%7893&*)@(#!";
+	private static String password = "123456";
 	
 	private static String rootPath = "/";
 	
