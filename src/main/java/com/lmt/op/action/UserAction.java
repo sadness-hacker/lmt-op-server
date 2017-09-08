@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,7 +78,7 @@ public class UserAction {
 			HttpServletRequest request,HttpServletResponse response) throws IOException{
 		user.setSalt("0809");
 		String password = user.getPassword();
-		if(password != null && !"".equals(password.trim())){
+		if(StringUtils.isNotBlank(password)){
 			password = MD5.md5(password);
 			user.setPassword(password);
 		}
@@ -85,7 +86,7 @@ public class UserAction {
 			user.setStatus(1);
 		}
 		if(user.getId() != null && user.getId().intValue() > 0){
-			if(password != null && !"".equals(password.trim())){
+			if(StringUtils.isBlank(password)){
 				User u = userService.get(user.getId());
 				user.setPassword(u.getPassword());
 			}
