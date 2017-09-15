@@ -51,7 +51,7 @@ public class Version implements Serializable {
 	private String fileMd5;
 	
 	@Column(name="file_size")
-	private long fileSize;
+	private Long fileSize;
 	
 	@Column(name="description")
 	private String description;
@@ -120,11 +120,11 @@ public class Version implements Serializable {
 		this.fileMd5 = fileMd5;
 	}
 
-	public long getFileSize() {
+	public Long getFileSize() {
 		return fileSize;
 	}
 
-	public void setFileSize(long fileSize) {
+	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
 	}
 	
