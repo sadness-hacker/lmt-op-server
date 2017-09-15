@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,13 +73,24 @@ public class VersionAction extends BaseAction {
 	public String list(
 			@RequestParam(value="currPage",defaultValue="1") int currPage,
 			@RequestParam(value="limit",defaultValue="10") int limit,
+			@RequestParam(value="appId",defaultValue="0") int appId,
+			@RequestParam(value="envType",required=false) String envType,
 			HttpServletRequest request,HttpServletResponse response){
 		PaginationModel<Version> pageModel = new PaginationModel<Version>();
 		pageModel.setCurrPage(currPage);
 		pageModel.setLimit(limit);
-		versionService.list(pageModel);
+		Version v = new Version();
+		if(appId > 0){
+			v.setAppId(appId);
+		}
+		if(StringUtils.isNotBlank(envType)){
+			v.setType(envType);
+		}
+		pageModel.setT(v);
+		pageModel = versionService.list(pageModel);
 		request.setAttribute("pageModel", pageModel);
 		request.setAttribute("envTypeMap", TypeUtil.getEnvTypeMap());
+		request.setAttribute("appList", applicationService.listAll());
 		return "version/list";
 	}
 	

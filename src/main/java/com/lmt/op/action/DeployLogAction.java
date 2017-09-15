@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lmt.common.action.BaseAction;
 import com.lmt.common.util.DateUtil;
 import com.lmt.op.model.DeployLog;
+import com.lmt.op.service.IApplicationService;
 import com.lmt.op.service.IDeployLogService;
 import com.lmt.op.util.TypeUtil;
 import com.lmt.orm.common.model.PaginationModel;
@@ -33,6 +35,9 @@ public class DeployLogAction extends BaseAction {
 	
 	@Resource
 	private IDeployLogService deployLogService;
+	
+	@Resource
+	private IApplicationService applicationService;
 
 	/**
 	 * 
@@ -46,13 +51,24 @@ public class DeployLogAction extends BaseAction {
 	public String list(
 			@RequestParam(value="currPage",defaultValue="1") int currPage,
 			@RequestParam(value="limit",defaultValue="10") int limit,
+			@RequestParam(value="appId",defaultValue="0") int appId,
+			@RequestParam(value="envType",required=false) String envType,
 			HttpServletRequest request,HttpServletResponse response){
 		PaginationModel<DeployLog> pageModel = new PaginationModel<DeployLog>();
 		pageModel.setCurrPage(currPage);
 		pageModel.setLimit(limit);
+		DeployLog dl = new DeployLog();
+		if(appId > 0){
+			dl.setAppId(appId);
+		}
+		if(StringUtils.isNotBlank(envType)){
+			dl.setVersionType(envType);
+		}
+		pageModel.setT(dl);
 		deployLogService.list(pageModel);
 		request.setAttribute("pageModel", pageModel);
 		request.setAttribute("envTypeMap", TypeUtil.getEnvTypeMap());
+		request.setAttribute("appList", applicationService.listAll());
 		return "deployLog/list";
 	}
 	
