@@ -23,7 +23,7 @@
     <junit.version>4.12</junit.version>
     <jackson.version>2.9.9.3</jackson.version>
     <jstl.version>1.2</jstl.version>
-    <commons.net.version>3.6</commons.net.version>
+    <commons.net.version>3.9.0</commons.net.version>
   </properties>
   
   <dependencies>
